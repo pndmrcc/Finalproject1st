@@ -76,24 +76,29 @@ const SecurityScreen = () => {
       setDisabling(true);
       try {
         const token = localStorage.getItem('authToken');
+        console.log('Starting disable 2FA with token:', token);
+        
         const response = await axios.post(
           'http://localhost:8000/api/2fa/disable/',
           {},
           {
             headers: {
-              Authorization: `Token ${token}`
+              Authorization: `Token ${token}`,
+              'Content-Type': 'application/json'
             }
           }
         );
         
-        console.log('Disable response:', response.data);
+        console.log('Disable response success:', response.data);
         setTwoFaEnabled(false);
         setAlert({
           type: 'success',
           message: '✓ Two-Factor Authentication has been disabled'
         });
       } catch (error) {
-        console.error('Disable 2FA error:', error);
+        console.error('Disable 2FA error - Full error:', error);
+        console.error('Response status:', error.response?.status);
+        console.error('Response data:', error.response?.data);
         setAlert({
           type: 'danger',
           message: error.response?.data?.error || 'Failed to disable Two-Factor Authentication. Please try again.'

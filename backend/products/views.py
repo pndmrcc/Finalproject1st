@@ -190,13 +190,21 @@ def disable_2fa(request):
     Disable 2FA for user
     Note: We keep the secret stored so user can re-enable without scanning QR code again
     """
-    profile = request.user.profile
-    profile.two_fa_enabled = False
-    # Don't clear the secret - keep it so user can re-enable by just verifying OTP
-    profile.save()
-    return Response({
-        'message': '2FA disabled successfully'
-    }, status=status.HTTP_200_OK)
+    try:
+        profile = request.user.profile
+        profile.two_fa_enabled = False
+        # Don't clear the secret - keep it so user can re-enable by just verifying OTP
+        profile.save()
+        print(f"2FA disabled for user {request.user.username}")
+        return Response({
+            'message': '2FA disabled successfully',
+            'two_fa_enabled': False
+        }, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(f"Error disabling 2FA: {str(e)}")
+        return Response({
+            'error': f'Failed to disable 2FA: {str(e)}'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
