@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, ListGroup, Spinner, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, ListGroup, Spinner, Alert, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import TwoFactorSetup from '../components/TwoFactorSetup';
 import QuickVerify2FA from '../components/QuickVerify2FA';
@@ -12,6 +12,9 @@ const SecurityScreen = () => {
   const [showTwoFaModal, setShowTwoFaModal] = useState(false);
   const [showQuickVerify, setShowQuickVerify] = useState(false);
   const [alert, setAlert] = useState(null);
+  const [showDisableConfirm, setShowDisableConfirm] = useState(false);
+  const [disableOtp, setDisableOtp] = useState('');
+  const [disableError, setDisableError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -72,40 +75,49 @@ const SecurityScreen = () => {
   };
 
   const handleDisable2FA = async () => {
-    if (window.confirm('Are you sure you want to disable Two-Factor Authentication? This will make your account less secure.')) {
-      setDisabling(true);
-      try {
-        const token = localStorage.getItem('authToken');
-        console.log('Starting disable 2FA with token:', token);
-        
-        const response = await axios.post(
-          'http://localhost:8000/api/2fa/disable/',
-          {},
-          {
-            headers: {
-              Authorization: `Token ${token}`,
-              'Content-Type': 'application/json'
-            }
+    // Show OTP confirmation dialog
+    setShowDisableConfirm(true);
+  };
+
+  const handleConfirmDisable = async () => {
+    if (!disableOtp || disableOtp.length !== 6) {
+      setDisableError('Please enter a valid 6-digit code');
+      return;
+    }
+
+    setDisabling(true);
+    setDisableError(null);
+    try {
+      const token = localStorage.getItem('authToken');
+      console.log('Starting disable 2FA with OTP:', disableOtp);
+      
+      const response = await axios.post(
+        'http://localhost:8000/api/2fa/disable/',
+        { otp_token: disableOtp },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json'
           }
-        );
-        
-        console.log('Disable response success:', response.data);
-        setTwoFaEnabled(false);
-        setAlert({
-          type: 'success',
-          message: '✓ Two-Factor Authentication has been disabled'
-        });
-      } catch (error) {
-        console.error('Disable 2FA error - Full error:', error);
-        console.error('Response status:', error.response?.status);
-        console.error('Response data:', error.response?.data);
-        setAlert({
-          type: 'danger',
-          message: error.response?.data?.error || 'Failed to disable Two-Factor Authentication. Please try again.'
-        });
-      } finally {
-        setDisabling(false);
-      }
+        }
+      );
+      
+      console.log('Disable response success:', response.data);
+      setTwoFaEnabled(false);
+      setShowDisableConfirm(false);
+      setDisableOtp('');
+      setAlert({
+        type: 'success',
+        message: '✓ Two-Factor Authentication has been disabled'
+      });
+    } catch (error) {
+      console.error('Disable 2FA error - Full error:', error);
+      console.error('Response status:', error.response?.status);
+      console.error('Response data:', error.response?.data);
+      setDisableError(error.response?.data?.error || 'Failed to disable. Please try again.');
+      setDisableOtp('');
+    } finally {
+      setDisabling(false);
     }
   };
 
@@ -233,6 +245,63 @@ const SecurityScreen = () => {
           });
         }}
       />
+
+      {/* Disable 2FA Confirmation Modal */}
+      <Modal show={showDisableConfirm} onHide={() => setShowDisableConfirm(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <i className='fas fa-exclamation-triangle me-2 text-danger'></i>Confirm Disable 2FA
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className='mb-4'>
+            To disable Two-Factor Authentication, please enter the 6-digit code from your authenticator app:
+          </p>
+          
+          {disableError && (
+            <Alert variant='danger' dismissible onClose={() => setDisableError(null)}>
+              {disableError}
+            </Alert>
+          )}
+
+          <Form.Group className='mb-3'>
+            <Form.Control
+              type='text'
+              placeholder='000000'
+              maxLength='6'
+              value={disableOtp}
+              onChange={(e) => setDisableOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+              className='text-center'
+              style={{ fontSize: '24px', letterSpacing: '8px' }}
+              disabled={disabling}
+              autoFocus
+            />
+          </Form.Group>
+
+          <p className='text-muted small'>
+            This action is irreversible and your account will no longer have Two-Factor Authentication enabled.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={() => setShowDisableConfirm(false)}>
+            Cancel
+          </Button>
+          <Button 
+            variant='danger' 
+            onClick={handleConfirmDisable}
+            disabled={disabling || disableOtp.length !== 6}
+          >
+            {disabling ? (
+              <>
+                <Spinner animation='border' size='sm' className='me-2' />
+                Disabling...
+              </>
+            ) : (
+              'Disable 2FA'
+            )}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

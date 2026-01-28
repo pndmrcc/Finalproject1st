@@ -188,10 +188,27 @@ def confirm_2fa(request):
 def disable_2fa(request):
     """
     Disable 2FA for user
+    If 2FA is enabled, require OTP verification for security
     Note: We keep the secret stored so user can re-enable without scanning QR code again
     """
     try:
         profile = request.user.profile
+        otp_token = request.data.get('otp_token')
+        
+        # If 2FA is enabled, require OTP verification to disable it
+        if profile.two_fa_enabled and profile.two_fa_secret:
+            if not otp_token:
+                return Response({
+                    'error': 'OTP token required to disable 2FA'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Verify the OTP token
+            totp = pyotp.TOTP(profile.two_fa_secret)
+            if not totp.verify(otp_token, valid_window=2):
+                return Response({
+                    'error': 'Invalid OTP token. Please try again.'
+                }, status=status.HTTP_401_UNAUTHORIZED)
+        
         profile.two_fa_enabled = False
         # Don't clear the secret - keep it so user can re-enable by just verifying OTP
         profile.save()
