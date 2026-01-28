@@ -1,0 +1,237 @@
+/* Checkout Modal Styling */
+
+.checkout-modal .modal-content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 15px;
+  color: white;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.checkout-modal .modal-header {
+  border: none;
+  padding: 25px;
+  background: transparent;
+}
+
+.checkout-modal .modal-header .btn-close {
+  filter: brightness(0) invert(1);
+}
+
+.checkout-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+.checkout-body {
+  padding: 20px 25px;
+  background: transparent;
+}
+
+.product-description {
+  color: #1dd1a1;
+  font-size: 15px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.price-section {
+  margin-bottom: 20px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.price-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.price-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+}
+
+.quantity-section {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.quantity-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+.quantity-input {
+  width: 70px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.quantity-input:focus {
+  outline: none;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.quantity-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.total-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  margin-bottom: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.total-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+}
+
+.total-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+}
+
+.checkout-footer {
+  border: none;
+  padding: 20px 25px;
+  background: transparent;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.cancel-btn {
+  background: rgba(0, 0, 0, 0.2);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 10px 25px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.purchase-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 2px solid white;
+  color: white;
+  font-weight: 700;
+  padding: 10px 30px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.purchase-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  color: white;
+  border-color: white;
+}
+
+.login-btn {
+  background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+  border: none;
+  color: white;
+  font-weight: 700;
+  padding: 10px 30px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+  color: white;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+}
+
+.login-btn:focus {
+  color: white;
+  outline: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 576px) {
+  .checkout-modal .modal-content {
+    border-radius: 12px;
+  }
+
+  .checkout-modal .modal-header,
+  .checkout-body,
+  .checkout-footer {
+    padding: 15px 20px;
+  }
+
+  .checkout-title {
+    font-size: 22px;
+  }
+
+  .product-description {
+    font-size: 13px;
+  }
+
+  .price-label,
+  .quantity-label,
+  .total-label {
+    font-size: 14px;
+  }
+
+  .price-value,
+  .total-value {
+    font-size: 16px;
+  }
+
+  .quantity-input {
+    width: 60px;
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .checkout-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cancel-btn,
+  .purchase-btn,
+  .login-btn {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
