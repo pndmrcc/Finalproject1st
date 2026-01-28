@@ -119,8 +119,8 @@ const SignupScreen = () => {
   };
 
   return (
-    <Container className="auth-container">
-      <Row className="justify-content-center align-items-center w-100">
+    <Container fluid className="auth-container d-flex justify-content-center align-items-center">
+      <Row className="w-100 justify-content-center">
         <Col xs={12} sm={10} md={7} lg={6}>
           <Card className="auth-card shadow-lg">
             <Card.Body className="p-5">

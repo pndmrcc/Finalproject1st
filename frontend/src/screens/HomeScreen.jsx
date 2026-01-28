@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import products from '../products'
+import defaultProducts from '../products'
 import {Row, Col, Alert} from 'react-bootstrap'
 import Product from '../components/Product'
 import axios from 'axios'
 
 function HomeScreen() {
-    const [products, setProducts] = useState(products)
+    const [products, setProducts] = useState(defaultProducts)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
