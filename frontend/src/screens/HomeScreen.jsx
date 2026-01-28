@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
+import products from '../products'
 import {Row, Col, Alert} from 'react-bootstrap'
 import Product from '../components/Product'
 import axios from 'axios'
 
 function HomeScreen() {
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState(products)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
@@ -13,11 +14,15 @@ function HomeScreen() {
             try {
                 setLoading(true)
                 const {data} = await axios.get('http://localhost:8000/api/products/')
-                setProducts(data)
+                // Only update if we get valid data with images
+                if (data && data.length > 0) {
+                    setProducts(data)
+                }
                 setError(null)
             } catch (err) {
                 console.error('Error fetching products:', err)
-                setError('Unable to load products. Please try again later.')
+                // Don't set error, just use local products as fallback
+                console.log('Using local products as fallback')
             } finally {
                 setLoading(false)
             }
@@ -28,8 +33,6 @@ function HomeScreen() {
   return (
     <div>
         <h3 className='py-3 text-center'><i className='fas fa-fire'></i>Hottest in the Market<i className='fas fa-fire'></i></h3>
-        
-        {error && <Alert variant="warning">{error}</Alert>}
         
         {loading ? (
             <div className="text-center py-5">
