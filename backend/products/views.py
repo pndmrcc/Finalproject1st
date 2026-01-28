@@ -126,7 +126,7 @@ def enable_2fa(request):
     
     # If secret already exists (e.g., re-enabling after disable), use it
     if not profile.two_fa_secret:
-        secret = profile.generate_2fa_secret()
+        profile.generate_2fa_secret()
         profile.save()
     
     uri = profile.get_2fa_uri()
@@ -142,7 +142,7 @@ def enable_2fa(request):
     
     return Response({
         'message': '2FA setup initiated',
-        'secret': secret,
+        'secret': profile.two_fa_secret,
         'qr_code': f'data:image/png;base64,{img_str}',
         'uri': uri
     }, status=status.HTTP_200_OK)

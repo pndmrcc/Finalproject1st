@@ -70,6 +70,8 @@ const SecurityScreen = () => {
       });
     }
   };
+
+  const handleDisable2FA = async () => {
     if (window.confirm('Are you sure you want to disable Two-Factor Authentication? This will make your account less secure.')) {
       setDisabling(true);
       try {
