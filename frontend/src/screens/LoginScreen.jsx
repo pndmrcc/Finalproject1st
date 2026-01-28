@@ -81,8 +81,8 @@ const LoginScreen = () => {
 
   return (
     <Container className="auth-container">
-      <Row className="justify-content-center align-items-center min-vh-100">
-        <Col md={6} lg={5}>
+      <Row className="justify-content-center align-items-center w-100">
+        <Col xs={12} sm={10} md={6} lg={5}>
           <Card className="auth-card shadow-lg">
             <Card.Body className="p-5">
               <h2 className="text-center mb-4 fw-bold text-primary">

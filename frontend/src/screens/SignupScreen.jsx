@@ -120,8 +120,8 @@ const SignupScreen = () => {
 
   return (
     <Container className="auth-container">
-      <Row className="justify-content-center align-items-center py-5">
-        <Col md={7} lg={6}>
+      <Row className="justify-content-center align-items-center w-100">
+        <Col xs={12} sm={10} md={7} lg={6}>
           <Card className="auth-card shadow-lg">
             <Card.Body className="p-5">
               <h2 className="text-center mb-4 fw-bold text-primary">
@@ -139,8 +139,8 @@ const SignupScreen = () => {
               )}
 
               <Form onSubmit={handleSubmit}>
-                <Row>
-                  <Col md={6}>
+                <Row className="g-2">
+                  <Col xs={12} sm={6}>
                     <Form.Group className="mb-3">
                       <Form.Label className="fw-semibold">
                         First Name
@@ -155,7 +155,7 @@ const SignupScreen = () => {
                       />
                     </Form.Group>
                   </Col>
-                  <Col md={6}>
+                  <Col xs={12} sm={6}>
                     <Form.Group className="mb-3">
                       <Form.Label className="fw-semibold">Last Name</Form.Label>
                       <Form.Control
