@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import products from '../products'
 import {Row, Col, Alert} from 'react-bootstrap'
 import Product from '../components/Product'
 import axios from 'axios'
@@ -19,8 +18,6 @@ function HomeScreen() {
             } catch (err) {
                 console.error('Error fetching products:', err)
                 setError('Unable to load products. Please try again later.')
-                // Fallback to local products if API fails
-                setProducts(products)
             } finally {
                 setLoading(false)
             }
