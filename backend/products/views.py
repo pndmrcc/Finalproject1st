@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from .products import products
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, UserSerializer, UserProfileSerializer
@@ -242,7 +243,7 @@ def get_user_profile(request):
     """
     try:
         profile = request.user.profile
-        serializer = UserProfileSerializer(profile)
+        serializer = UserProfileSerializer(profile, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
     except UserProfile.DoesNotExist:
         return Response({
@@ -251,6 +252,7 @@ def get_user_profile(request):
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser, FormParser])
 def update_user_profile(request):
     """
     Update user profile
@@ -271,9 +273,14 @@ def update_user_profile(request):
         # Update profile fields
         if 'bio' in request.data:
             profile.bio = request.data['bio']
+
+        # Accept profile picture upload
+        if 'profile_picture' in request.FILES:
+            profile.profile_picture = request.FILES['profile_picture']
+
         profile.save()
         
-        serializer = UserProfileSerializer(profile)
+        serializer = UserProfileSerializer(profile, context={'request': request})
         return Response({
             'message': 'Profile updated successfully',
             'data': serializer.data

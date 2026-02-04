@@ -1,0 +1,23 @@
+[
+  {
+    "id": "g2",
+    "title": "Payment Steps",
+    "summary": "What to expect when paying via card or local providers.",
+    "slug": "payment-steps",
+    "content": "## Payment Steps\n\nHere’s what to expect when making a payment:\n\n- Pick your preferred payment method (cards, e-wallets, or supported local providers).\n- Enter the required payment details for the chosen method.\n- Review the transaction summary and confirm the amount before submitting.\n- Authorize the payment (you may be prompted for an OTP or other confirmation).\n- Wait for the confirmation message — the transaction is complete when you see success.\n- Your top-up will be credited automatically after successful payment.\n\n**Security:** All payments are processed using secure, industry-standard methods to protect your financial information. If you have concerns, contact Support with your order details."
+  },
+  {
+    "id": "g3",
+    "title": "Common Issues",
+    "summary": "Troubleshooting tips: failed payments, receipts, and delivery issues.",
+    "slug": "common-issues",
+    "content": "## Common Issues & Troubleshooting\n\n**Payment failed**\n- Verify your internet connection and try again.\n- Ensure your payment method has sufficient funds or credit.\n- If available, attempt an alternative payment provider.\n\n**No receipt received**\n- Check the email address used for the order and any wallet/payment app notifications.\n- Save screenshots or confirmation numbers — these help Support investigate quickly.\n\nIf problems persist, open a Support ticket and include transaction IDs, timestamps, and screenshots where possible. This allows us to resolve your issue faster."
+  },
+  {
+    "id": "g4",
+    "title": "Account Security",
+    "summary": "Best practices for passwords, two-factor authentication, and account recovery.",
+    "slug": "account-security",
+    "content": "## Account Security\n\nProtecting your account is a priority. Follow these best practices:\n\n**Create a strong, unique password**\n- Use 8–12+ characters with a mix of uppercase, lowercase, numbers, and symbols.\n- Avoid personal or easily guessed phrases.\n- Do not reuse passwords across sites.\n\n**Enable Two-Factor Authentication (2FA)**\n- Activate 2FA in Settings → Security for an added verification step at login.\n- 2FA significantly reduces the risk of unauthorized access even if a password is compromised.\n\n**Account recovery & tips**\n- Store recovery codes securely when provided.\n- Keep your account email current and verified.\n\nFollowing these steps helps keep your purchases and account data safe."
+  }
+]

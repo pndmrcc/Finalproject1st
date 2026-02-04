@@ -2,7 +2,7 @@ import React, {useEffect, useState, useMemo} from 'react'
 import defaultProducts from '../products'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Col, ListGroup, Row, Image, Card, Button, Form } from 'react-bootstrap';
-import Rating from '../components/Rating';
+// Rating removed per request
 import CheckoutModal from '../components/CheckoutModal';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -123,7 +123,13 @@ function ProductScreen() {
     }, [id])
 
     const handlePurchase = () => {
-        setShowCheckout(true)
+      const token = localStorage.getItem('authToken') || localStorage.getItem('user')
+      if (!token) {
+        // redirect unauthenticated users to login
+        navigate('/login')
+        return
+      }
+      setShowCheckout(true)
     }
 
   return (
@@ -371,9 +377,7 @@ function ProductScreen() {
                                 Purchase
                             </Button>
                         </ListGroup.Item>
-                        <ListGroup.Item>
-                            <Rating color={'#f8e825'} value={product.rating} text={`${product.numReviews} reviews`} />
-                        </ListGroup.Item>
+                        {/* Rating removed */}
                     </ListGroup>
                 </Card>
             </Col>

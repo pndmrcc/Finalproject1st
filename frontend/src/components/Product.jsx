@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Rating from './Rating'
+// Rating removed per request
 import { Card, Button } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import CheckoutModal from './CheckoutModal'
@@ -22,9 +22,7 @@ function Product({product}) {
                       </Card.Title>
                   </Link>
                   <Card.Text as='div'>
-                      <div className='my-3'>
-                          <Rating value={product.rating} text={`${product.numReviews} reviews`} color={'#f8e825'}/>
-                      </div>
+                        {/* Rating removed */}
                       <h5 className='my-2'>${product.price}</h5>
                       {product.countInStock === 0 && (
                         <p className='text-danger fw-bold mt-2'>

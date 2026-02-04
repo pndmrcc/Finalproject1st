@@ -9,10 +9,23 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    profile_picture = serializers.SerializerMethodField()
 
     class Meta:
         model = UserProfile
         fields = ['user', 'bio', 'profile_picture', 'created_at', 'updated_at']
+
+    def get_profile_picture(self, obj):
+        request = self.context.get('request')
+        if obj.profile_picture:
+            try:
+                url = obj.profile_picture.url
+                if request is not None:
+                    return request.build_absolute_uri(url)
+                return url
+            except Exception:
+                return None
+        return None
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, min_length=8)

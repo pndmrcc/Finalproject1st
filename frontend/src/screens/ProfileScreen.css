@@ -1,0 +1,16 @@
+/* Profile page styles */
+.profile-page { }
+
+.profile-card { background:#fff; border-radius:12px }
+.avatar-placeholder { width:56px; height:56px; border-radius:10px; background:#f1f1f1; display:flex; align-items:center; justify-content:center; color:#666; font-size:22px }
+
+@media (max-width:576px){
+  .avatar-placeholder { width:48px; height:48px }
+}
+
+.avatar-clickable { display: inline-block }
+.avatar-clickable:hover .avatar-placeholder,
+.avatar-clickable:hover img {
+  transform: scale(1.03);
+  transition: transform 120ms ease-in-out;
+}

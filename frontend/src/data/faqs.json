@@ -1,0 +1,22 @@
+[
+  {
+    "id": "f1",
+    "question": "How do I contact support?",
+    "answer": "Open the Support menu in the header and choose Contact Support, or use the Contact form in the Help Center. Include your username and any order or transaction IDs to help us investigate quickly."
+  },
+  {
+    "id": "f2",
+    "question": "How do I enable Two-Factor Authentication (2FA)?",
+    "answer": "Go to Settings → Security, follow the Two-Factor Authentication setup steps, scan the QR code with an authenticator app, and verify with the generated code. Save your recovery codes in a safe place."
+  },
+  {
+    "id": "f3",
+    "question": "Which payment methods are supported?",
+    "answer": "We support credit/debit cards and selected regional providers. Payment options appear during checkout depending on your region."
+  },
+  {
+    "id": "f4",
+    "question": "Can I get a refund?",
+    "answer": "Refunds are handled case-by-case. Open Contact Support with your order id and reason; our support team will review."
+  }
+]

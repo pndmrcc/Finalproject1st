@@ -95,10 +95,17 @@ const SignupScreen = () => {
       const errorData = error.response?.data;
       const newErrors = {};
 
+      // log full error for debugging
+      console.error('Signup error response:', error.response || error);
+
       if (errorData) {
+        // If response is a dict of field errors from DRF, map them
         Object.keys(errorData).forEach((key) => {
           if (Array.isArray(errorData[key])) {
             newErrors[key] = errorData[key][0];
+          } else if (typeof errorData[key] === 'object') {
+            // nested errors
+            newErrors[key] = JSON.stringify(errorData[key]);
           } else {
             newErrors[key] = errorData[key];
           }
@@ -107,11 +114,14 @@ const SignupScreen = () => {
 
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
+        // also show a top-level alert if there's a non-field message
+        if (newErrors.detail || newErrors.non_field_errors) {
+          setAlert({ type: 'danger', message: newErrors.detail || newErrors.non_field_errors });
+        }
       } else {
-        setAlert({
-          type: 'danger',
-          message: 'Registration failed. Please try again.',
-        });
+        // If backend didn't return structured errors, show raw message if available
+        const rawMessage = error.response?.data?.message || error.message || 'Registration failed. Please try again.';
+        setAlert({ type: 'danger', message: rawMessage });
       }
     } finally {
       setLoading(false);
